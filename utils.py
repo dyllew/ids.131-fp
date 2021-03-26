@@ -65,3 +65,45 @@ def preprocessing(text, stopwords,join=False):
 
 
 
+## Data Loading
+
+
+# Note that CNN.200910 is empty.  Delete from directory before running function
+
+
+def get_data(parent):
+
+		## Helper function to sort files into correct dataframes
+		def get_channel(file):
+    ans = ""
+    for char in file:
+        if char.isalpha():
+            ans += char
+        else:
+            break
+    return ans
+
+
+    cnn_list = []
+		fox_list = []
+		msnbc_list = []
+		parent = "./TelevisionNews/"
+		for file in os.listdir("./TelevisionNews/"):
+    		channel = get_channel(file)
+    		path = os.path.join(parent, file)
+    		if channel=="CNN":
+        		cnn_list.append(pd.read_csv(path))
+    		elif channel=="FOXNEWS":
+        		fox_list.append(pd.read_csv(path))
+    		else:
+        		msnbc_list.append(pd.read_csv(path))
+
+    cnn = pd.concat(cnn_list)
+		fox = pd.concat(fox_list)
+		msnbc = pd.concat(msnbc_list)
+
+		return cnn,fox,msnbc
+
+
+
+
