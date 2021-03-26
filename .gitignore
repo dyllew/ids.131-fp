@@ -1,6 +1,10 @@
 # For Mac users
 .DS_Store
 
+# Datasets
+TelevisionNews
+TelevisionNewsV2
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
