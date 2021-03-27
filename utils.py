@@ -65,6 +65,14 @@ def preprocessing(text, stopwords,join=False):
         text = ' '.join(text)
     return text
 
+def make_list_of_token_lists(df, stopwords):
+    list_of_token_lists = df["Snippet"].apply(lambda x: preprocessing(x, stopwords, join=False)).tolist()
+    return list_of_token_lists
+
+def make_list_of_processed_snippets(df, stopwords):
+    list_of_processed_snippets = df["Snippet"].apply(lambda x: preprocessing(x, stopwords, join=True)).tolist()
+    return list_of_processed_snippets
+
 ## Data Loading
 
 ## Helper function to sort files into correct dataframes
