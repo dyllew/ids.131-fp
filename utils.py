@@ -151,7 +151,28 @@ def get_data_by_channel(df, channel_name):
 def get_data_by_show(df, show_name):
     return df[df['Show'] == show_name]
 
+## DataFrame constructors
+
+def make_total_word_count_df(df, stopwords, data_name):
+    processed_snippets = make_list_of_processed_snippets(df, stopwords)
+
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(processed_snippets)
+
+    words = vectorizer.get_feature_names()
+    total_word_counts = X.toarray().sum(axis=0)
+    total_word_count = sum(total_word_counts)
+    rel_frequency = total_word_counts*1.0/total_word_count
+    total_count_col_name = 'total_count_{}'.format(data_name)
+    rel_frequency_col_name = 'rel_frequency_{}'.format(data_name)
+
+    data = {'word': words, total_count_col_name: total_word_counts, rel_frequency_col_name: rel_frequency}
+    total_word_count_df = pd.DataFrame(data)
+
+    return total_word_count_df
+
 ## Other useful functions
+
 def make_modified_data_folder(src_dir, dest_dir):
     news_folder_path = src_dir
     news_folder_V2_path = dest_dir
