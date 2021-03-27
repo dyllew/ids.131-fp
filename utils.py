@@ -20,6 +20,9 @@ nltk.download('punkt')
 
 # constants
 BBC_NEWS_STRING = 'BBCNEWS'
+CNN_STRING = 'CNN'
+MSNBC_STRING = 'MSNBC'
+FOX_NEWS_STRING = 'FOXNEWS'
 BAD_DF_NAME = 'CNN.200910.csv'
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
@@ -83,9 +86,9 @@ def get_data(parent):
             continue
         channel = get_channel(file)
         path = os.path.join(parent, file)
-        if channel=="CNN":
+        if channel == CNN_STRING:
             cnn_list.append(pd.read_csv(path))
-        elif channel=="FOXNEWS":
+        elif channel == FOX_NEWS_STRING:
             fox_list.append(pd.read_csv(path))
         else:
             msnbc_list.append(pd.read_csv(path))
@@ -93,11 +96,43 @@ def get_data(parent):
     cnn = pd.concat(cnn_list)
     fox = pd.concat(fox_list)
     msnbc = pd.concat(msnbc_list)
-
+    # parse strings into date objects
+    for df in [cnn, fox, msnbc]:
+        df["DateTime"] = pd.to_datetime(df["MatchDateTime"], format='%m/%d/%Y %H:%M:%S', errors='ignore')
+        df.drop(columns=['MatchDateTime'], inplace=True)
     return cnn, fox, msnbc
 
+def make_all_data_df(data_dir):
+    cnn, fox, msnbc = get_data(data_dir)
+    full_data_df = pd.concat([cnn, fox, msnbc], ignore_index=True)
+    return full_data_df
 
-# Other
+
+## DataFrame Filtering
+
+# in time
+def get_data_between_dates(df, start_date, end_date):
+    # start_date and end_date should be strings of the form '2009-12-31' i.e. 'year-month-day'
+    # note: works the same for '2009-01-01' and '2009-1-1'
+    date_mask = (df["DateTime"] >= start_date) & (df["DateTime"] <= end_date)
+    return df[date_mask]
+
+def get_data_by_year(df, year):
+    # year is an int
+    start_date = '{}-1-1'.format(year)
+    end_date = '{}-12-31'.format(year)
+    return get_data_between_dates(df, start_date, end_date)
+
+# By channel / network
+def get_data_by_channel(df, channel_name):
+    # channel_name must be one of CNN_STRING, FOX_NEWS_STRING, MSNBC_STRING
+    return df[df['Station'] == channel_name]
+
+# By show
+def get_data_by_show(df, show_name):
+    return df[df['Show'] == show_name]
+
+## Other useful functions
 def make_modified_data_folder(src_dir, dest_dir):
     news_folder_path = src_dir
     news_folder_V2_path = dest_dir
