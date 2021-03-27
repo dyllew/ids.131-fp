@@ -24,8 +24,11 @@ CNN_STRING = 'CNN'
 MSNBC_STRING = 'MSNBC'
 FOX_NEWS_STRING = 'FOXNEWS'
 BAD_DF_NAME = 'CNN.200910.csv'
-stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
+
+corpus_specific_stopwords = set(['climate', 'change', 'global', 'warming'])
+non_corpus_specific_stopwords = set(stopwords.words('english'))
+stop_words = non_corpus_specific_stopwords | corpus_specific_stopwords
 
 ## Preprocessing
 
@@ -73,6 +76,15 @@ def make_list_of_processed_snippets(df, stopwords):
     list_of_processed_snippets = df["Snippet"].apply(lambda x: preprocessing(x, stopwords, join=True)).tolist()
     return list_of_processed_snippets
 
+def get_corpus_specific_stopwords(list_of_processed_snippets, max_df=0.2, min_df=0):
+    # max_df indicates that a term appearing in more than max_df*100
+    # of the documents should be considered a stopword
+    # min_df is opposite to the above, where we consider words that
+    # appear in less than min_df*100 of the docs to be stopwords
+    vectorizer = CountVectorizer(max_df=max_df, min_df=min_df)
+    doc_word_matrix = vectorizer.fit_transform(list_of_processed_snippets)
+    return vectorizer.stop_words_
+
 ## Data Loading
 
 ## Helper function to sort files into correct dataframes
@@ -110,11 +122,10 @@ def get_data(parent):
         df.drop(columns=['MatchDateTime'], inplace=True)
     return cnn, fox, msnbc
 
-def make_all_data_df(data_dir):
+def make_corpus_df(data_dir):
     cnn, fox, msnbc = get_data(data_dir)
-    full_data_df = pd.concat([cnn, fox, msnbc], ignore_index=True)
-    return full_data_df
-
+    corpus_df = pd.concat([cnn, fox, msnbc], ignore_index=True)
+    return corpus_df
 
 ## DataFrame Filtering
 
