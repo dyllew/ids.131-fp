@@ -26,7 +26,7 @@ FOX_NEWS_STRING = 'FOXNEWS'
 BAD_DF_NAME = 'CNN.200910.csv'
 lemmatizer = WordNetLemmatizer()
 
-corpus_specific_stopwords = set(['climate', 'change', 'global', 'warming'])
+corpus_specific_stopwords = set(['climate', 'change', 'global', 'warming', 'im', 'say', 'he', 'thats', 'dont', 'thing'])
 non_corpus_specific_stopwords = set(stopwords.words('english'))
 stop_words = non_corpus_specific_stopwords | corpus_specific_stopwords
 
@@ -87,7 +87,7 @@ def get_corpus_specific_stopwords(list_of_processed_snippets, max_df=0.2, min_df
 
 ## Data Loading
 
-## Helper function to sort files into correct dataframes
+# Helper function to sort files into correct dataframes
 def get_channel(file):
     ans = ""
     for char in file:

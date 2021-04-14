@@ -82,7 +82,8 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoint
+AdamScratchPad.ipynbs
 
 # IPython
 profile_default/
