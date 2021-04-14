@@ -193,3 +193,10 @@ def make_modified_data_folder(src_dir, dest_dir):
         # Copy the files we want into the new modified 
         shutil.copy(src_path, dest_path)
     print('All files added to {}'.format(dest_dir))
+    
+    
+def display_topics(model, feature_names, no_top_words=5):
+    for topic_idx, topic in enumerate(model.components_):
+        print("Topic %d:" % (topic_idx))
+        print(" ".join([feature_names[i]
+                          for i in topic.argsort()[:-no_top_words - 1:-1]]))
