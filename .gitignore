@@ -1,6 +1,9 @@
 # For Mac users
 .DS_Store
 
+# Jupyter
+.ipynb_checkpoints
+
 # Datasets
 TelevisionNews
 TelevisionNewsV2
