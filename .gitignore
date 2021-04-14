@@ -83,7 +83,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoint
-AdamScratchPad.ipynbs
+.ipynb_checkpoints
 
 # IPython
 profile_default/
