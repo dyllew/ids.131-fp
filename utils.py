@@ -26,10 +26,9 @@ FOX_NEWS_STRING = 'FOXNEWS'
 BAD_DF_NAME = 'CNN.200910.csv'
 lemmatizer = WordNetLemmatizer()
 
-corpus_specific_stopwords = set(['climate', 'change', 'global', 'warming', 'im', 'say', 'he', 'thats', 'dont', 'thing'])
+from stopwords_set import corpus_specific_stopwords
 non_corpus_specific_stopwords = set(stopwords.words('english'))
 stop_words = non_corpus_specific_stopwords | corpus_specific_stopwords
-
 ## Preprocessing
 
 # make lowercase
