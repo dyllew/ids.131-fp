@@ -29,7 +29,7 @@ lemmatizer = WordNetLemmatizer()
 
 from stopwords_set import corpus_specific_stopwords
 non_corpus_specific_stopwords = set(stopwords.words('english'))
-stop_words = non_corpus_specific_stopwords | corpus_specific_stopwords
+stop_words = non_corpus_specific_stopwords.union(corpus_specific_stopwords)
 ## Preprocessing
 
 # make lowercase
