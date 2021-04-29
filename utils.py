@@ -24,6 +24,7 @@ CNN_STRING = 'CNN'
 MSNBC_STRING = 'MSNBC'
 FOX_NEWS_STRING = 'FOXNEWS'
 NETWORKS = [CNN_STRING, FOX_NEWS_STRING, MSNBC_STRING]
+STATIONS = ['CNN', 'Fox News', 'MSNBC']
 BAD_DF_NAME = 'CNN.200910.csv'
 lemmatizer = WordNetLemmatizer()
 
@@ -75,6 +76,9 @@ def make_list_of_token_lists(df, stopwords):
 def make_list_of_processed_snippets(df, stopwords):
     list_of_processed_snippets = df["Snippet"].apply(lambda x: preprocessing(x, stopwords, join=True)).tolist()
     return list_of_processed_snippets
+
+def create_document(list_of_processed_snippets):
+    return ' '.join(list_of_processed_snippets)
 
 def get_corpus_specific_stopwords(list_of_processed_snippets, max_df=0.2, min_df=0):
     # max_df indicates that a term appearing in more than max_df*100
