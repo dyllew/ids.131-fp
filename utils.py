@@ -65,6 +65,7 @@ def preprocessing(text, stopwords,join=False):
     text = tokenize(text)
     text = rm_stopwords(text, stopwords)
     text = lemmatize(text)
+    text = rm_stopwords(text, stopwords)
     if join:
         text = ' '.join(text)
     return text
