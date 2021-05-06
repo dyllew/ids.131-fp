@@ -1,0 +1,13 @@
+Adjusted p-values for 2-sample T-test for change in mean between pre-Trump and post-Trump mentions 
+(broken at 2017-01-31)
+----------------------------------------------------------------------------------------------------
+1) Channel: cnn, Topic: 2, adjusted p-value: 0.0097
+2) Channel: cnn, Topic: 3, adjusted p-value: 0.0159
+3) Channel: cnn, Topic: 9, adjusted p-value: 0.0000
+4) Channel: fox, Topic: 4, adjusted p-value: 0.0093
+5) Channel: fox, Topic: 8, adjusted p-value: 0.0134
+6) Channel: fox, Topic: 9, adjusted p-value: 0.0000
+7) Channel: msnbc, Topic: 3, adjusted p-value: 0.0210
+8) Channel: msnbc, Topic: 5, adjusted p-value: 0.0270
+9) Channel: msnbc, Topic: 9, adjusted p-value: 0.0000
+
